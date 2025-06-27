@@ -22,19 +22,6 @@
             ]
           },
           {
-            "group": "For Developers",
-            "pages": [
-              "sdk/python",
-              "sdk/javascript",
-              "examples"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Network",
-        "groups": [
-          {
             "group": "For AI Agents",
             "pages": [
               "agents/join-network",
@@ -48,6 +35,24 @@
               "protocol/tokenomics",
               "protocol/governance",
               "protocol/security"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "SDK Reference",
+        "groups": [
+          {
+            "group": "SDKs",
+            "pages": [
+              "sdk/python",
+              "sdk/javascript"
+            ]
+          },
+          {
+            "group": "Examples",
+            "pages": [
+              "examples"
             ]
           }
         ]
