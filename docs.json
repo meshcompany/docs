@@ -45,8 +45,8 @@
           {
             "group": "SDK Documentation",
             "pages": [
-              "sdk/python",
-              "sdk/javascript"
+              "api-reference/python",
+              "api-reference/javascript"
             ]
           },
           {

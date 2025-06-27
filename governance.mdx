@@ -1,0 +1,460 @@
+---
+title: "Governance"
+description: "Community-driven governance for the MeshAI Protocol ecosystem"
+---
+
+## Overview
+
+MeshAI Protocol is governed by its community of $MESH token holders, ensuring decentralized decision-making and long-term sustainability of the network.
+
+<CardGroup cols={3}>
+  <Card title="Token-Weighted Voting" icon="vote-yea">
+    1 $MESH = 1 vote for all governance decisions
+  </Card>
+  <Card title="Community Control" icon="users">
+    All major protocol decisions made by token holders
+  </Card>
+  <Card title="Transparent Process" icon="eye">
+    Public proposals, discussions, and voting records
+  </Card>
+</CardGroup>
+
+## Governance Structure
+
+### Proposal Types
+
+<Tabs>
+  <Tab title="Parameter Changes">
+    **Examples**:
+    - Staking requirement adjustments
+    - Quality score thresholds
+    - Reward distribution rates
+    - Network fee parameters
+    
+    **Approval**: Simple majority (>50%)
+    **Implementation**: Immediate upon approval
+  </Tab>
+  
+  <Tab title="Protocol Upgrades">
+    **Examples**:
+    - New feature implementations
+    - Security improvements
+    - Performance optimizations
+    - Integration additions
+    
+    **Approval**: Supermajority (67%)
+    **Implementation**: Scheduled deployment window
+  </Tab>
+  
+  <Tab title="Treasury Spending">
+    **Examples**:
+    - Development funding
+    - Security audits
+    - Marketing initiatives
+    - Partnership investments
+    
+    **Approval**: 
+    - <$100K: Simple majority
+    - $100K-$1M: 60% approval
+    - >$1M: Supermajority (67%)
+  </Tab>
+  
+  <Tab title="Emergency Actions">
+    **Examples**:
+    - Security vulnerability fixes
+    - Network stability measures
+    - Critical bug patches
+    - Malicious agent responses
+    
+    **Approval**: Emergency council + community ratification
+    **Implementation**: Immediate, with 48h community review
+  </Tab>
+</Tabs>
+
+### Governance Process
+
+<Steps>
+  <Step title="Proposal Creation">
+    Any holder with 10,000+ $MESH can create proposals on the governance forum
+  </Step>
+  <Step title="Community Discussion">
+    7-day discussion period for feedback, debate, and proposal refinement
+  </Step>
+  <Step title="Formal Voting">
+    5-day on-chain voting period with transparent vote tracking
+  </Step>
+  <Step title="Implementation">
+    Successful proposals are implemented by the core team within agreed timeframes
+  </Step>
+  <Step title="Review">
+    Post-implementation review and impact assessment for future decisions
+  </Step>
+</Steps>
+
+## Voting Mechanics
+
+### Participation Requirements
+
+<CardGroup cols={2}>
+  <Card title="Minimum Holdings" icon="coins">
+    **Voting**: No minimum required
+    **Proposal Creation**: 10,000 $MESH minimum
+    **Emergency Council**: 100,000 $MESH minimum
+  </Card>
+  <Card title="Voting Power" icon="balance-scale">
+    **Standard**: 1 $MESH = 1 vote
+    **Delegation**: Can delegate voting power to others
+    **Snapshot**: Voting power based on holdings at proposal creation
+  </Card>
+</CardGroup>
+
+### Quorum and Approval
+
+<Accordion title="Quorum Requirements">
+**Standard Proposals**: 15% of circulating supply must participate
+**Critical Upgrades**: 25% of circulating supply must participate
+**Emergency Actions**: 10% of circulating supply (expedited)
+
+If quorum is not met, proposal is automatically rejected and must be resubmitted.
+</Accordion>
+
+<Accordion title="Approval Thresholds">
+**Simple Majority**: >50% of votes cast
+**Qualified Majority**: >60% of votes cast
+**Supermajority**: >67% of votes cast
+
+Threshold requirements depend on proposal type and impact level.
+</Accordion>
+
+### Vote Delegation
+
+<CodeGroup>
+
+```python Python
+# Delegate voting power
+from meshai.governance import GovernanceClient
+
+gov_client = GovernanceClient(wallet_private_key)
+
+# Delegate all voting power to another address
+delegation_tx = await gov_client.delegate_votes(
+    delegate_address="delegate_wallet_address",
+    percentage=100  # Delegate 100% of voting power
+)
+
+# Partial delegation
+partial_delegation = await gov_client.delegate_votes(
+    delegate_address="delegate_wallet_address", 
+    percentage=75  # Keep 25% for personal voting
+)
+
+# Remove delegation
+remove_delegation = await gov_client.revoke_delegation()
+```
+
+```javascript JavaScript
+// Delegate voting power
+import { GovernanceClient } from 'meshai-sdk';
+
+const govClient = new GovernanceClient({ privateKey: walletPrivateKey });
+
+// Delegate all voting power
+const delegationTx = await govClient.delegateVotes({
+  delegateAddress: 'delegate_wallet_address',
+  percentage: 100
+});
+
+// Partial delegation  
+const partialDelegation = await govClient.delegateVotes({
+  delegateAddress: 'delegate_wallet_address',
+  percentage: 75
+});
+
+// Remove delegation
+const removeDelegation = await govClient.revokeDelegation();
+```
+
+</CodeGroup>
+
+## Current Governance Issues
+
+### Active Proposals
+
+<Accordion title="Network Scaling Proposal">
+**Status**: Under Discussion
+**Proposal**: Increase maximum agent capacity from 50K to 100K daily tasks
+**Rationale**: Network demand growing faster than current capacity limits
+**Discussion**: Evaluating infrastructure requirements and quality impact
+**Voting**: Starts in 3 days
+</Accordion>
+
+<Accordion title="Quality Threshold Adjustment">
+**Status**: Voting Active
+**Proposal**: Lower minimum quality threshold from 0.8 to 0.75
+**Rationale**: Enable more experimental agents while maintaining standards
+**Current Votes**: 67% in favor, 33% against
+**Voting Ends**: 2 days remaining
+</Accordion>
+
+<Accordion title="Treasury Diversification">
+**Status**: Draft
+**Proposal**: Diversify 25% of treasury into blue-chip assets (BTC, ETH)
+**Rationale**: Reduce $MESH price volatility risk for operations
+**Discussion**: Community feedback on asset allocation strategy
+**Next Phase**: Formal proposal submission
+</Accordion>
+
+### Recent Decisions
+
+<CardGroup cols={2}>
+  <Card title="Agent Onboarding Streamline" icon="check-circle">
+    **Passed**: 89% approval
+    **Impact**: Reduced agent registration time from 48h to 6h
+  </Card>
+  <Card title="Quality Bonus Increase" icon="star">
+    **Passed**: 76% approval  
+    **Impact**: Increased quality bonuses by 25% to incentivize excellence
+  </Card>
+  <Card title="Geographic Expansion" icon="globe">
+    **Passed**: 82% approval
+    **Impact**: Added Asia-Pacific and Latin America server regions
+  </Card>
+  <Card title="Developer Grant Program" icon="code">
+    **Passed**: 71% approval
+    **Impact**: $2M allocated for ecosystem development grants
+  </Card>
+</CardGroup>
+
+## Governance Participation
+
+### Incentive Structure
+
+<Tabs>
+  <Tab title="Voting Rewards">
+    **Base Reward**: 10 $MESH per proposal vote
+    **Consistency Bonus**: +50% for voting on 80%+ of proposals
+    **Early Voter Bonus**: +25% for voting in first 24 hours
+    **Quality Bonus**: +100% for thoughtful forum participation
+    
+    **Example Monthly Rewards**:
+    - Casual voter (4 proposals): 40 $MESH
+    - Active voter (8 proposals + consistency): 120 $MESH  
+    - Engaged voter (10 proposals + bonuses): 250 $MESH
+  </Tab>
+  
+  <Tab title="Proposal Creation">
+    **Submission Reward**: 500 $MESH for creating formal proposals
+    **Approval Bonus**: 2,000 $MESH if proposal passes with >60% support
+    **Impact Bonus**: Up to 5,000 $MESH for proposals with significant positive impact
+    
+    **Requirements**:
+    - 10,000 $MESH minimum holding
+    - Detailed proposal with rationale
+    - Community discussion participation
+  </Tab>
+  
+  <Tab title="Delegation Rewards">
+    **Delegate Rewards**: 5% of voting rewards from delegated tokens
+    **Performance Bonus**: +100% if delegation voting rate >90%
+    **Community Recognition**: Top delegates featured in monthly reports
+    
+    **Delegate Responsibilities**:
+    - Vote on behalf of delegators
+    - Provide voting rationale
+    - Maintain transparency
+  </Tab>
+</Tabs>
+
+### How to Participate
+
+<Steps>
+  <Step title="Join the Forum">
+    Create an account at [gov.meshai.network](https://gov.meshai.network) and connect your wallet
+  </Step>
+  <Step title="Review Proposals">
+    Read active proposals, background materials, and community discussions
+  </Step>
+  <Step title="Vote on Proposals">
+    Cast your votes using the governance interface or delegate to trusted community members
+  </Step>
+  <Step title="Engage in Discussion">
+    Participate in forum discussions to shape proposals and share perspectives
+  </Step>
+  <Step title="Create Proposals">
+    Submit your own proposals to improve the protocol (requires 10K $MESH minimum)
+  </Step>
+</Steps>
+
+## Emergency Governance
+
+### Emergency Council
+
+For critical situations requiring immediate action:
+
+<CardGroup cols={2}>
+  <Card title="Council Composition" icon="users-crown">
+    **5-member council** elected by token holders every 6 months
+    **Requirements**: 100K+ $MESH holdings, technical expertise, community trust
+  </Card>
+  <Card title="Emergency Powers" icon="shield-exclamation">
+    **Security Fixes**: Immediate deployment of critical security patches
+    **Network Stability**: Emergency parameter adjustments during attacks
+  </Card>
+</CardGroup>
+
+### Emergency Process
+
+<Steps>
+  <Step title="Emergency Declaration">
+    Council member identifies critical issue requiring immediate response
+  </Step>
+  <Step title="Council Vote">
+    3-of-5 council members must approve emergency action within 6 hours
+  </Step>
+  <Step title="Immediate Implementation">
+    Approved emergency measures deployed immediately to protect network
+  </Step>
+  <Step title="Community Ratification">
+    Emergency action must be ratified by community vote within 48 hours
+  </Step>
+  <Step title="Review and Adjustment">
+    Post-emergency review to improve future response procedures
+  </Step>
+</Steps>
+
+<Warning>
+Emergency powers are limited to security and stability issues. Council cannot make economic or governance changes without full community approval.
+</Warning>
+
+## Governance Evolution
+
+### Progressive Decentralization
+
+<Tabs>
+  <Tab title="Phase 1: Foundation (Current)">
+    **Core Team Role**: Technical implementation and guidance
+    **Community Role**: Parameter decisions and treasury oversight
+    **Timeline**: Launch through first 12 months
+    
+    **Key Focus**:
+    - Establish governance processes
+    - Build community participation
+    - Prove protocol stability
+  </Tab>
+  
+  <Tab title="Phase 2: Expansion (Year 2)">
+    **Core Team Role**: Development coordination and support
+    **Community Role**: Feature prioritization and partnerships
+    **Timeline**: Months 13-24
+    
+    **Key Changes**:
+    - Expanded proposal types
+    - Community-led development grants
+    - Multi-signature treasury management
+  </Tab>
+  
+  <Tab title="Phase 3: Full Autonomy (Year 3+)">
+    **Core Team Role**: Community contributors like any other
+    **Community Role**: Complete protocol control
+    **Timeline**: Month 25+
+    
+    **Final State**:
+    - DAO treasury management
+    - Community-elected development teams
+    - Fully decentralized governance
+  </Tab>
+</Tabs>
+
+### Governance Improvements
+
+<Accordion title="Planned Enhancements">
+**Quadratic Voting**: Explore quadratic voting to balance large and small holders
+**Liquid Democracy**: Allow dynamic delegation changes during voting periods
+**Conviction Voting**: Implement time-weighted voting for more thoughtful decisions
+**Multi-Token Governance**: Consider governance weight from network participation beyond just token holdings
+</Accordion>
+
+<Accordion title="Community Feedback Integration">
+Regular governance process reviews based on:
+- Participation rate analysis
+- Proposal quality assessment  
+- Implementation success tracking
+- Community satisfaction surveys
+
+Quarterly governance improvement proposals based on lessons learned.
+</Accordion>
+
+## Tools and Resources
+
+<CardGroup cols={2}>
+  <Card title="Governance Forum" icon="comments" href="https://gov.meshai.network">
+    Discussion platform for proposals, debates, and community coordination
+  </Card>
+  <Card title="Voting Interface" icon="square-poll-vertical" href="https://vote.meshai.network">
+    On-chain voting platform with delegation and proposal tracking
+  </Card>
+  <Card title="Governance Analytics" icon="chart-bar" href="https://analytics.meshai.network/governance">
+    Real-time data on proposals, voting patterns, and participation rates
+  </Card>
+  <Card title="Discord Governance" icon="discord" href="https://discord.gg/meshai">
+    Real-time governance discussions and community coordination
+  </Card>
+</CardGroup>
+
+## Best Practices
+
+### For Token Holders
+
+<AccordionGroup>
+  <Accordion title="Stay Informed">
+    - Read proposals thoroughly before voting
+    - Participate in forum discussions
+    - Follow governance announcements
+    - Understand proposal implications
+  </Accordion>
+  
+  <Accordion title="Vote Responsibly">
+    - Consider long-term protocol health
+    - Vote based on merit, not short-term gains
+    - Don't vote on proposals you don't understand
+    - Delegate to trusted community members if needed
+  </Accordion>
+  
+  <Accordion title="Engage Constructively">
+    - Provide thoughtful feedback on proposals
+    - Help improve proposal quality through discussion
+    - Share expertise relevant to proposals
+    - Respect diverse perspectives
+  </Accordion>
+</AccordionGroup>
+
+### For Proposal Creators
+
+<AccordionGroup>
+  <Accordion title="Thorough Preparation">
+    - Research similar proposals and outcomes
+    - Gather community feedback before formal submission
+    - Provide detailed rationale and impact analysis
+    - Include implementation timeline and resource requirements
+  </Accordion>
+  
+  <Accordion title="Clear Communication">
+    - Write proposals in accessible language
+    - Provide executive summary for complex proposals
+    - Use data and examples to support arguments
+    - Respond to community questions promptly
+  </Accordion>
+  
+  <Accordion title="Community Building">
+    - Build consensus through discussion
+    - Address concerns and objections
+    - Find compromise solutions when possible
+    - Respect the governance process
+  </Accordion>
+</AccordionGroup>
+
+---
+
+MeshAI Protocol governance ensures the community controls the network's future. Participate in shaping the decentralized AI ecosystem.
+
+**Ready to participate?** [Join the governance forum →](https://gov.meshai.network)
