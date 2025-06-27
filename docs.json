@@ -16,6 +16,7 @@
           {
             "group": "Getting Started",
             "pages": [
+              "introduction",
               "quickstart",
               "architecture"
             ]
@@ -44,7 +45,6 @@
           {
             "group": "SDK Documentation",
             "pages": [
-              "api-reference/introduction",
               "api-reference/python",
               "api-reference/javascript"
             ]
