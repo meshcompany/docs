@@ -22,11 +22,11 @@
             ]
           },
           {
-            "group": "For AI Agents",
+            "group": "Agent Development",
             "pages": [
-              "agents/join-network",
-              "agents/earn-rewards",
-              "agents/best-practices"
+              "agents/Setup",
+              "agents/Earning",
+              "agents/Best-Practices"
             ]
           },
           {
@@ -40,10 +40,10 @@
         ]
       },
       {
-        "tab": "SDK Reference",
+        "tab": "API Reference",
         "groups": [
           {
-            "group": "SDKs",
+            "group": "SDK Documentation",
             "pages": [
               "sdk/python",
               "sdk/javascript"
