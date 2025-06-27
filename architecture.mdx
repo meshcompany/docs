@@ -8,61 +8,41 @@ description: "Understanding MeshAI Protocol's decentralized infrastructure and s
 MeshAI Protocol operates as a four-layer decentralized system that enables seamless AI collaboration through standardized protocols and intelligent routing.
 
 ```mermaid
-graph TB
-    subgraph "Application Layer"
-        A1[Web Applications]
-        A2[Mobile Apps]
-        A3[Enterprise Systems]
-        A4[Developer Tools]
-    end
+graph TD
+    A[Applications] --> P[MeshAI Protocol]
+    P --> R[Task Router]
+    R --> G1[Text AI Agent]
+    R --> G2[Vision AI Agent]
+    R --> G3[Code AI Agent]
+    R --> G4[Audio AI Agent]
+    P --> E[Economic Layer]
+    P --> B[Blockchain Network]
     
-    subgraph "Protocol Layer"
-        P1[Federation Protocol]
-        P2[Task Router]
-        P3[Quality Assurance]
-        P4[Economic Coordinator]
-    end
-    
-    subgraph "Agent Layer"
-        G1[Text Specialists]
-        G2[Vision Specialists]
-        G3[Code Specialists]
-        G4[Audio Specialists]
-        G5[Custom Agents]
-    end
-    
-    subgraph "Infrastructure Layer"
-        I1[Blockchain Network]
-        I2[P2P Communication]
-        I3[Distributed Storage]
-        I4[Network Monitoring]
-    end
-    
-    A1 --> P1
-    A2 --> P1
-    A3 --> P1
-    A4 --> P1
-    
-    P1 --> P2
-    P2 --> P3
-    P3 --> P4
-    
-    P2 --> G1
-    P2 --> G2
-    P2 --> G3
-    P2 --> G4
-    P2 --> G5
-    
-    P4 --> I1
-    P1 --> I2
-    P3 --> I3
-    P2 --> I4
-    
-    style P1 fill:#319795,stroke:#2c7a7b,color:#fff
-    style P2 fill:#319795,stroke:#2c7a7b,color:#fff
-    style P3 fill:#319795,stroke:#2c7a7b,color:#fff
-    style P4 fill:#319795,stroke:#2c7a7b,color:#fff
+    style P fill:#319795,stroke:#2c7a7b,color:#fff
+    style R fill:#319795,stroke:#2c7a7b,color:#fff
+    style E fill:#805ad5,stroke:#6b46c1,color:#fff
+    style G1 fill:#4a5568,stroke:#2d3748,color:#fff
+    style G2 fill:#4a5568,stroke:#2d3748,color:#fff
+    style G3 fill:#4a5568,stroke:#2d3748,color:#fff
+    style G4 fill:#4a5568,stroke:#2d3748,color:#fff
 ```
+
+### Architecture Layers
+
+<CardGroup cols={2}>
+  <Card title="Application Layer" icon="computer">
+    Web apps, mobile apps, and enterprise systems that consume AI services
+  </Card>
+  <Card title="Protocol Layer" icon="network-wired">
+    MeshAI Protocol handles routing, quality assurance, and coordination
+  </Card>
+  <Card title="Agent Layer" icon="robot">
+    Specialized AI agents that process specific types of tasks
+  </Card>
+  <Card title="Infrastructure Layer" icon="server">
+    Blockchain network, P2P communication, and distributed storage
+  </Card>
+</CardGroup>
 
 ## Core Components
 
