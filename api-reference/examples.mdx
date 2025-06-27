@@ -1,0 +1,424 @@
+---
+title: "Examples"
+description: "Real-world examples and implementation patterns for MeshAI Protocol"
+---
+
+## Overview
+
+This section provides practical examples of how to integrate MeshAI Protocol into real-world applications across different industries and use cases.
+
+<CardGroup cols={3}>
+  <Card title="Content Creation" icon="pen-to-square">
+    Automated content generation and optimization workflows
+  </Card>
+  <Card title="Document Processing" icon="file-text">
+    Intelligent document analysis and data extraction pipelines
+  </Card>
+  <Card title="Customer Support" icon="headset">
+    Multi-language AI-powered customer service systems
+  </Card>
+</CardGroup>
+
+## Content Creation Platform
+
+A complete content creation workflow using multiple specialized AI agents.
+
+### Use Case
+A marketing platform that generates blog posts, social media content, and marketing copy using specialized AI agents for different content types.
+
+<Tabs>
+  <Tab title="Python Implementation">
+    ```python
+    from meshai import MeshAI
+    import asyncio
+    
+    class ContentCreationPlatform:
+        def __init__(self, api_key):
+            self.client = MeshAI(api_key=api_key)
+        
+        async def create_blog_post(self, topic, target_audience, word_count=1000):
+            """Create a complete blog post with title, content, and SEO metadata"""
+            
+            # Create workflow
+            workflow = self.client.create_workflow(name="blog_creation")
+            
+            # Research phase
+            research_task = workflow.add_task(
+                task_type="content_research",
+                input_data={
+                    "topic": topic,
+                    "depth": "comprehensive",
+                    "sources": ["academic", "industry", "news"]
+                }
+            )
+            
+            # Generate outline
+            outline_task = workflow.add_task(
+                task_type="content_outline",
+                input_data={
+                    "topic": topic,
+                    "research": research_task.output,
+                    "target_audience": target_audience,
+                    "word_count": word_count
+                },
+                depends_on=research_task
+            )
+            
+            # Generate title options
+            title_task = workflow.add_task(
+                task_type="title_generation",
+                input_data={
+                    "topic": topic,
+                    "outline": outline_task.output,
+                    "count": 5,
+                    "style": "engaging"
+                },
+                depends_on=outline_task
+            )
+            
+            # Write main content
+            content_task = workflow.add_task(
+                task_type="long_form_writing",
+                input_data={
+                    "outline": outline_task.output,
+                    "style": "professional",
+                    "tone": "informative",
+                    "target_audience": target_audience
+                },
+                depends_on=outline_task,
+                parallel_to=title_task
+            )
+            
+            # Generate SEO metadata
+            seo_task = workflow.add_task(
+                task_type="seo_optimization",
+                input_data={
+                    "content": content_task.output,
+                    "title": title_task.output,
+                    "target_keywords": [topic]
+                },
+                depends_on=[content_task, title_task]
+            )
+            
+            # Execute workflow
+            results = await workflow.execute()
+            
+            return {
+                "title": results['title_task'].output[0],  # Best title
+                "content": results['content_task'].output,
+                "meta_description": results['seo_task'].output['meta_description'],
+                "keywords": results['seo_task'].output['keywords'],
+                "research_sources": results['research_task'].output['sources'],
+                "total_cost": workflow.get_total_cost(),
+                "quality_score": workflow.get_average_quality()
+            }
+        
+        async def create_social_media_campaign(self, blog_post, platforms):
+            """Create social media posts from blog content"""
+            
+            campaign_posts = {}
+            
+            for platform in platforms:
+                result = await self.client.execute_task(
+                    task_type="social_media_adaptation",
+                    input_data={
+                        "content": blog_post["content"],
+                        "platform": platform,
+                        "style": "engaging",
+                        "include_hashtags": True,
+                        "max_length": self.get_platform_limit(platform)
+                    }
+                )
+                
+                campaign_posts[platform] = result.output
+            
+            return campaign_posts
+        
+        def get_platform_limit(self, platform):
+            limits = {
+                "twitter": 280,
+                "linkedin": 3000,
+                "facebook": 2000,
+                "instagram": 1000
+            }
+            return limits.get(platform, 1000)
+    
+    # Usage example
+    async def main():
+        platform = ContentCreationPlatform("your_api_key")
+        
+        # Create blog post
+        blog_post = await platform.create_blog_post(
+            topic="The Future of Artificial Intelligence",
+            target_audience="tech professionals",
+            word_count=1500
+        )
+        
+        print(f"Generated blog post: {blog_post['title']}")
+        print(f"Cost: {blog_post['total_cost']} SOL")
+        
+        # Create social media campaign
+        social_posts = await platform.create_social_media_campaign(
+            blog_post,
+            platforms=["twitter", "linkedin", "facebook"]
+        )
+        
+        for platform, post in social_posts.items():
+            print(f"{platform.title()}: {post[:100]}...")
+    
+    if __name__ == "__main__":
+        asyncio.run(main())
+    ```
+  </Tab>
+  
+  <Tab title="JavaScript Implementation">
+    ```javascript
+    import { MeshAI } from 'meshai-sdk';
+    
+    class ContentCreationPlatform {
+      constructor(apiKey) {
+        this.client = new MeshAI({ apiKey });
+      }
+      
+      async createBlogPost(topic, targetAudience, wordCount = 1000) {
+        // Create workflow
+        const workflow = this.client.createWorkflow({ name: 'blog_creation' });
+        
+        // Research phase
+        const researchTask = workflow.addTask({
+          taskType: 'content_research',
+          input: {
+            topic,
+            depth: 'comprehensive',
+            sources: ['academic', 'industry', 'news']
+          }
+        });
+        
+        // Generate outline
+        const outlineTask = workflow.addTask({
+          taskType: 'content_outline',
+          input: {
+            topic,
+            research: researchTask.output,
+            targetAudience,
+            wordCount
+          },
+          dependsOn: researchTask
+        });
+        
+        // Generate title options
+        const titleTask = workflow.addTask({
+          taskType: 'title_generation',
+          input: {
+            topic,
+            outline: outlineTask.output,
+            count: 5,
+            style: 'engaging'
+          },
+          dependsOn: outlineTask
+        });
+        
+        // Write main content
+        const contentTask = workflow.addTask({
+          taskType: 'long_form_writing',
+          input: {
+            outline: outlineTask.output,
+            style: 'professional',
+            tone: 'informative',
+            targetAudience
+          },
+          dependsOn: outlineTask,
+          parallelTo: titleTask
+        });
+        
+        // Generate SEO metadata
+        const seoTask = workflow.addTask({
+          taskType: 'seo_optimization',
+          input: {
+            content: contentTask.output,
+            title: titleTask.output,
+            targetKeywords: [topic]
+          },
+          dependsOn: [contentTask, titleTask]
+        });
+        
+        // Execute workflow
+        const results = await workflow.execute();
+        
+        return {
+          title: results.titleTask.output[0],
+          content: results.contentTask.output,
+          metaDescription: results.seoTask.output.metaDescription,
+          keywords: results.seoTask.output.keywords,
+          researchSources: results.researchTask.output.sources,
+          totalCost: workflow.getTotalCost(),
+          qualityScore: workflow.getAverageQuality()
+        };
+      }
+      
+      async createSocialMediaCampaign(blogPost, platforms) {
+        const campaignPosts = {};
+        
+        for (const platform of platforms) {
+          const result = await this.client.executeTask({
+            taskType: 'social_media_adaptation',
+            input: {
+              content: blogPost.content,
+              platform,
+              style: 'engaging',
+              includeHashtags: true,
+              maxLength: this.getPlatformLimit(platform)
+            }
+          });
+          
+          campaignPosts[platform] = result.output;
+        }
+        
+        return campaignPosts;
+      }
+      
+      getPlatformLimit(platform) {
+        const limits = {
+          twitter: 280,
+          linkedin: 3000,
+          facebook: 2000,
+          instagram: 1000
+        };
+        return limits[platform] || 1000;
+      }
+    }
+    
+    // Usage example
+    async function main() {
+      const platform = new ContentCreationPlatform('your_api_key');
+      
+      // Create blog post
+      const blogPost = await platform.createBlogPost(
+        'The Future of Artificial Intelligence',
+        'tech professionals',
+        1500
+      );
+      
+      console.log(`Generated blog post: ${blogPost.title}`);
+      console.log(`Cost: ${blogPost.totalCost} SOL`);
+      
+      // Create social media campaign
+      const socialPosts = await platform.createSocialMediaCampaign(
+        blogPost,
+        ['twitter', 'linkedin', 'facebook']
+      );
+      
+      Object.entries(socialPosts).forEach(([platform, post]) => {
+        console.log(`${platform}: ${post.substring(0, 100)}...`);
+      });
+    }
+    
+    main().catch(console.error);
+    ```
+  </Tab>
+</Tabs>
+
+### Results
+
+```json
+{
+  "title": "The Future of AI: How Machine Learning Will Transform Industries by 2030",
+  "content": "Artificial Intelligence is rapidly evolving...",
+  "metaDescription": "Explore how AI and machine learning will reshape industries by 2030. Learn about emerging trends, challenges, and opportunities in this comprehensive guide.",
+  "keywords": ["artificial intelligence", "machine learning", "AI trends", "future technology"],
+  "totalCost": 0.025,
+  "qualityScore": 0.94
+}
+```
+
+## Document Processing Pipeline
+
+Intelligent document analysis for legal and business use cases.
+
+### Use Case
+A legal firm processing contracts and documents using OCR, entity extraction, and legal analysis.
+
+<Tabs>
+  <Tab title="Python Implementation">
+    ```python
+    from meshai import MeshAI
+    import asyncio
+    
+    class LegalDocumentProcessor:
+        def __init__(self, api_key):
+            self.client = MeshAI(api_key=api_key)
+        
+        async def process_contract(self, document_url, contract_type):
+            """Complete contract analysis workflow"""
+            
+            workflow = self.client.create_workflow(name="contract_analysis")
+            
+            # OCR for scanned documents
+            ocr_task = workflow.add_task(
+                task_type="document_ocr",
+                input_data={
+                    "document_url": document_url,
+                    "quality": "high",
+                    "language": "auto-detect"
+                },
+                quality_threshold=0.99
+            )
+            
+            # Extract key entities
+            entity_task = workflow.add_task(
+                task_type="legal_entity_extraction",
+                input_data={
+                    "text": ocr_task.output,
+                    "contract_type": contract_type,
+                    "extract_types": [
+                        "parties", "dates", "amounts", 
+                        "obligations", "terms", "clauses"
+                    ]
+                },
+                depends_on=ocr_task
+            )
+            
+            # Analyze contract clauses
+            clause_analysis_task = workflow.add_task(
+                task_type="contract_clause_analysis",
+                input_data={
+                    "text": ocr_task.output,
+                    "contract_type": contract_type,
+                    "focus_areas": [
+                        "termination_clauses", "liability", 
+                        "intellectual_property", "confidentiality"
+                    ]
+                },
+                depends_on=ocr_task,
+                parallel_to=entity_task
+            )
+            
+            # Risk assessment
+            risk_task = workflow.add_task(
+                task_type="legal_risk_assessment",
+                input_data={
+                    "contract_text": ocr_task.output,
+                    "entities": entity_task.output,
+                    "clause_analysis": clause_analysis_task.output,
+                    "contract_type": contract_type
+                },
+                depends_on=[ocr_task, entity_task, clause_analysis_task]
+            )
+            
+            # Generate executive summary
+            summary_task = workflow.add_task(
+                task_type="legal_summary_generation",
+                input_data={
+                    "contract_text": ocr_task.output,
+                    "risk_assessment": risk_task.output,
+                    "key_entities": entity_task.output,
+                    "summary_type": "executive"
+                },
+                depends_on=[risk_task, entity_task]
+            )
+            
+            # Execute workflow
+            results = await workflow.execute()
+            
+            return {
+                "extracted_text": results['ocr_task'].output,

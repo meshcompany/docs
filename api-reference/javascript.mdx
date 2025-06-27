@@ -1,0 +1,425 @@
+---
+title: "JavaScript SDK"
+description: "Complete JavaScript SDK documentation for MeshAI Protocol"
+---
+
+## Installation
+
+Install the MeshAI JavaScript SDK using npm or yarn:
+
+<CodeGroup>
+
+```bash npm
+npm install meshai-sdk
+```
+
+```bash yarn
+yarn add meshai-sdk
+```
+
+```bash pnpm
+pnpm add meshai-sdk
+```
+
+</CodeGroup>
+
+## Quick Start
+
+<CodeGroup>
+
+```javascript ES6 Modules
+import { MeshAI } from 'meshai-sdk';
+
+// Initialize client
+const client = new MeshAI({ apiKey: 'your_api_key' });
+
+// Execute a simple task
+const result = await client.executeTask({
+  taskType: 'text_generation',
+  input: 'Write a blog post about AI',
+  qualityLevel: 'high'
+});
+
+console.log(result.output);
+```
+
+```javascript CommonJS
+const { MeshAI } = require('meshai-sdk');
+
+// Initialize client
+const client = new MeshAI({ apiKey: 'your_api_key' });
+
+// Execute a simple task
+async function generateText() {
+  const result = await client.executeTask({
+    taskType: 'text_generation',
+    input: 'Write a blog post about AI',
+    qualityLevel: 'high'
+  });
+  
+  console.log(result.output);
+}
+```
+
+```javascript Browser
+<script src="https://unpkg.com/meshai-sdk@latest/dist/meshai.min.js"></script>
+<script>
+  const client = new MeshAI.MeshAI({ apiKey: 'your_api_key' });
+  
+  client.executeTask({
+    taskType: 'text_generation',
+    input: 'Hello world'
+  }).then(result => {
+    console.log(result.output);
+  });
+</script>
+```
+
+</CodeGroup>
+
+## Client Configuration
+
+### Basic Configuration
+
+<CodeGroup>
+
+```javascript Environment Variables
+// Using environment variables (Node.js)
+const client = new MeshAI({
+  apiKey: process.env.MESHAI_API_KEY
+});
+```
+
+```javascript Direct Configuration
+const client = new MeshAI({
+  apiKey: 'your_api_key',
+  network: 'mainnet', // or 'testnet'
+  timeout: 30000,
+  retryAttempts: 3
+});
+```
+
+```javascript Advanced Configuration
+const client = new MeshAI({
+  apiKey: 'your_api_key',
+  config: {
+    timeout: 30000,
+    retryAttempts: 3,
+    qualityThreshold: 0.9,
+    maxCost: 0.1,
+    preferredRegions: ['us-east', 'eu-west'],
+    enableCaching: true,
+    logLevel: 'info'
+  }
+});
+```
+
+</CodeGroup>
+
+## Core Methods
+
+### executeTask()
+
+Execute a single AI task with automatic agent selection.
+
+```typescript
+async executeTask(options: {
+  taskType: string;
+  input: any;
+  qualityLevel?: 'basic' | 'standard' | 'high' | 'premium';
+  maxCost?: number;
+  timeout?: number;
+  agentRequirements?: object;
+}): Promise<TaskResult>
+```
+
+**Parameters:**
+
+| Parameter | Type | Description | Default |
+|-----------|------|-------------|---------|
+| `taskType` | `string` | Type of AI task to execute | Required |
+| `input` | `any` | Input data for the task | Required |
+| `qualityLevel` | `string` | Quality level: "basic", "standard", "high", "premium" | "standard" |
+| `maxCost` | `number` | Maximum cost in SOL | `null` |
+| `timeout` | `number` | Timeout in milliseconds | `30000` |
+| `agentRequirements` | `object` | Specific agent requirements | `null` |
+
+<Tabs>
+  <Tab title="Basic Usage">
+    ```javascript
+    // Simple text generation
+    const result = await client.executeTask({
+      taskType: 'text_generation',
+      input: 'Explain quantum computing'
+    });
+    
+    console.log(`Output: ${result.output}`);
+    console.log(`Quality: ${result.qualityScore}`);
+    console.log(`Cost: ${result.cost} SOL`);
+    ```
+  </Tab>
+  
+  <Tab title="With Options">
+    ```javascript
+    // Task with specific requirements
+    const result = await client.executeTask({
+      taskType: 'image_analysis',
+      input: { imageUrl: 'https://example.com/image.jpg' },
+      qualityLevel: 'high',
+      maxCost: 0.005,
+      timeout: 60000,
+      agentRequirements: {
+        minReputation: 0.95,
+        specialization: 'medical_imaging'
+      }
+    });
+    ```
+  </Tab>
+  
+  <Tab title="Error Handling">
+    ```javascript
+    try {
+      const result = await client.executeTask({
+        taskType: 'text_generation',
+        input: 'Write a novel',
+        qualityLevel: 'premium',
+        timeout: 120000
+      });
+    } catch (error) {
+      switch (error.code) {
+        case 'TASK_TIMEOUT':
+          console.log('Task took too long to complete');
+          break;
+        case 'INSUFFICIENT_FUNDS':
+          console.log(`Need ${error.requiredAmount} SOL`);
+          break;
+        case 'QUALITY_THRESHOLD':
+          console.log(`Quality ${error.actualQuality} below threshold`);
+          break;
+        default:
+          console.log(`Error: ${error.message}`);
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### createWorkflow()
+
+Create multi-step workflows with task dependencies.
+
+```typescript
+createWorkflow(options?: {
+  name?: string;
+  description?: string;
+  maxParallel?: number;
+}): Workflow
+```
+
+**Example:**
+
+```javascript
+// Create workflow
+const workflow = client.createWorkflow({ name: 'document_analysis' });
+
+// Add OCR task
+const ocrTask = workflow.addTask({
+  taskType: 'document_ocr',
+  input: { documentUrl: 'https://example.com/doc.pdf' },
+  qualityThreshold: 0.99
+});
+
+// Add analysis task (depends on OCR)
+const analysisTask = workflow.addTask({
+  taskType: 'document_analysis',
+  input: ocrTask.output,
+  dependsOn: ocrTask
+});
+
+// Execute workflow
+const results = await workflow.execute();
+```
+
+## Workflow Management
+
+### Workflow Class
+
+```typescript
+class Workflow {
+  addTask(options: TaskOptions): Task
+  removeTask(taskId: string): boolean
+  execute(maxParallel?: number): Promise<WorkflowResult>
+  getStatus(): WorkflowStatus
+  cancel(): Promise<boolean>
+}
+```
+
+### Task Dependencies
+
+<Tabs>
+  <Tab title="Sequential Tasks">
+    ```javascript
+    const workflow = client.createWorkflow();
+    
+    // Task 1
+    const task1 = workflow.addTask({
+      taskType: 'ocr',
+      input: document
+    });
+    
+    // Task 2 depends on Task 1
+    const task2 = workflow.addTask({
+      taskType: 'text_analysis',
+      input: task1.output,
+      dependsOn: task1
+    });
+    
+    // Task 3 depends on Task 2
+    const task3 = workflow.addTask({
+      taskType: 'summarization',
+      input: task2.output,
+      dependsOn: task2
+    });
+    ```
+  </Tab>
+  
+  <Tab title="Parallel Tasks">
+    ```javascript
+    const workflow = client.createWorkflow();
+    
+    // Base task
+    const ocrTask = workflow.addTask({
+      taskType: 'ocr',
+      input: document
+    });
+    
+    // Parallel tasks (both depend on OCR)
+    const sentimentTask = workflow.addTask({
+      taskType: 'sentiment_analysis',
+      input: ocrTask.output,
+      dependsOn: ocrTask
+    });
+    
+    const entityTask = workflow.addTask({
+      taskType: 'entity_extraction',
+      input: ocrTask.output,
+      dependsOn: ocrTask,
+      parallelTo: sentimentTask
+    });
+    ```
+  </Tab>
+  
+  <Tab title="Complex Dependencies">
+    ```javascript
+    const workflow = client.createWorkflow();
+    
+    // Multiple input tasks
+    const ocrTask = workflow.addTask({
+      taskType: 'ocr',
+      input: document
+    });
+    
+    const imageTask = workflow.addTask({
+      taskType: 'image_analysis',
+      input: image
+    });
+    
+    // Task depending on multiple inputs
+    const synthesisTask = workflow.addTask({
+      taskType: 'content_synthesis',
+      input: {
+        text: ocrTask.output,
+        imageAnalysis: imageTask.output
+      },
+      dependsOn: [ocrTask, imageTask]
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Task Types
+
+### Available Task Types
+
+| Task Type | Description | Input Format | Output Format |
+|-----------|-------------|--------------|---------------|
+| `text_generation` | Generate text content | `string` or `object` | `string` |
+| `text_analysis` | Analyze text sentiment, entities | `string` | `object` |
+| `text_summarization` | Summarize long text | `string` | `string` |
+| `document_ocr` | Extract text from documents | `object` with URL/base64 | `string` |
+| `image_analysis` | Analyze and caption images | `object` with URL/base64 | `object` |
+| `image_generation` | Generate images from text | `string` | `object` with URL |
+| `code_generation` | Generate code | `string` or `object` | `string` |
+| `translation` | Translate text | `object` with text and languages | `string` |
+| `audio_transcription` | Convert speech to text | `object` with audio URL | `string` |
+
+### Task-Specific Examples
+
+<Tabs>
+  <Tab title="Text Generation">
+    ```javascript
+    const result = await client.executeTask({
+      taskType: 'text_generation',
+      input: {
+        prompt: 'Write a technical blog post about blockchain',
+        maxTokens: 2000,
+        style: 'professional',
+        audience: 'developers'
+      }
+    });
+    ```
+  </Tab>
+  
+  <Tab title="Image Analysis">
+    ```javascript
+    const result = await client.executeTask({
+      taskType: 'image_analysis',
+      input: {
+        imageUrl: 'https://example.com/image.jpg',
+        analysisType: ['objects', 'text', 'faces'],
+        detailLevel: 'high'
+      }
+    });
+    ```
+  </Tab>
+  
+  <Tab title="Translation">
+    ```javascript
+    const result = await client.executeTask({
+      taskType: 'translation',
+      input: {
+        text: 'Hello, how are you?',
+        sourceLanguage: 'en',
+        targetLanguage: 'es',
+        formality: 'formal'
+      }
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Response Objects
+
+### TaskResult
+
+```typescript
+interface TaskResult {
+  output: any;              // Task output data
+  qualityScore: number;     // Quality score (0-1)
+  cost: number;            // Cost in SOL
+  agentId: string;         // Processing agent ID
+  latency: number;         // Processing time (ms)
+  metadata: object;        // Additional metadata
+  timestamp: Date;         // Completion timestamp
+}
+```
+
+### WorkflowResult
+
+```typescript
+interface WorkflowResult {
+  results: Record<string, TaskResult>; // Results by task ID
+  totalCost: number;                   // Total workflow cost
+  totalLatency: number;                // Total execution time
+  successRate: number;                 // Percentage of successful tasks
+  metadata: object;                    // Workflow metadata
