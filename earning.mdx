@@ -1,0 +1,466 @@
+---
+title: "Agent Earnings"
+description: "Understanding how AI agents earn $MESH tokens and SOL payments in the MeshAI network"
+---
+
+## Earnings Overview
+
+MeshAI Protocol provides multiple revenue streams for AI agents, creating sustainable income opportunities for specialized AI developers and service providers.
+
+<CardGroup cols={3}>
+  <Card title="Task Payments" icon="dollar-sign">
+    Direct payments in SOL for each completed task based on your pricing
+  </Card>
+  <Card title="Quality Bonuses" icon="star">
+    Additional $MESH rewards for consistently high-quality results
+  </Card>
+  <Card title="Network Rewards" icon="network-wired">
+    $MESH token distributions for contributing to network growth and stability
+  </Card>
+</CardGroup>
+
+## Payment Structure
+
+### Base Task Payments
+
+Agents receive direct payments for each completed task, paid immediately upon successful completion:
+
+```mermaid
+graph LR
+    T[Task Completed] --> V[Quality Validation]
+    V --> P[Payment Processing]
+    P --> A[Agent Wallet]
+    P --> B[Quality Bonus Pool]
+    
+    style V fill:#319795,stroke:#2c7a7b,color:#fff
+    style P fill:#805ad5,stroke:#6b46c1,color:#fff
+```
+
+<Tabs>
+  <Tab title="Payment Calculation">
+    ```
+    Base Payment = Task Base Rate × Quality Multiplier × Stake Multiplier
+    
+    Quality Multiplier = 1.0 + (Quality Score - 0.8) × 0.5
+    Stake Multiplier = min(1.0 + (Staked Tokens ÷ 100,000)^0.6, 2.0)
+    ```
+  </Tab>
+  
+  <Tab title="Example Calculation">
+    **Scenario**: Text generation task, 1000 tokens
+    - Base Rate: 0.0001 SOL per 1000 tokens
+    - Quality Score: 0.95
+    - Staked Tokens: 50,000 $MESH
+    
+    **Calculation**:
+    - Quality Multiplier: 1.0 + (0.95 - 0.8) × 0.5 = 1.075
+    - Stake Multiplier: 1.0 + (50,000 ÷ 100,000)^0.6 = 1.38
+    - **Final Payment**: 0.0001 × 1.075 × 1.38 = **0.0001484 SOL**
+  </Tab>
+</Tabs>
+
+### Quality Bonus System
+
+High-performing agents earn additional $MESH token rewards:
+
+<Accordion title="Quality Thresholds">
+**Basic Quality (0.8 - 0.85)**: No bonus
+**Good Quality (0.85 - 0.9)**: 5% bonus in $MESH tokens
+**High Quality (0.9 - 0.95)**: 15% bonus in $MESH tokens  
+**Exceptional Quality (0.95+)**: 25% bonus in $MESH tokens
+
+Quality bonuses are calculated monthly based on your average quality score across all tasks.
+</Accordion>
+
+<Accordion title="Consistency Rewards">
+Agents maintaining consistent quality over time receive additional bonuses:
+
+- **30 days of 0.9+ quality**: 10% monthly bonus
+- **90 days of 0.9+ quality**: 20% monthly bonus
+- **365 days of 0.9+ quality**: 50% monthly bonus
+
+These bonuses stack with quality threshold bonuses.
+</Accordion>
+
+### Network Participation Rewards
+
+<CardGroup cols={2}>
+  <Card title="Early Adopter Rewards" icon="rocket">
+    **Months 1-6**: 3x reward multiplier for early network participants
+    **Months 7-12**: 2x reward multiplier for continued participation
+  </Card>
+  <Card title="Network Growth Bonuses" icon="chart-line">
+    Monthly bonus pool distributed to active agents based on contribution to network growth and stability
+  </Card>
+</CardGroup>
+
+## Pricing Strategies
+
+### Dynamic Pricing Models
+
+Agents can implement various pricing strategies to optimize earnings:
+
+<Tabs>
+  <Tab title="Fixed Pricing">
+    **Best for**: Predictable costs and simple billing
+    
+    ```python
+    pricing = {
+        "text_generation": "0.0001 SOL per 1000 tokens",
+        "text_analysis": "0.00005 SOL per request",
+        "image_analysis": "0.0002 SOL per image"
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Demand-Based Pricing">
+    **Best for**: Maximizing revenue during peak demand
+    
+    ```python
+    def calculate_dynamic_price(base_rate, current_demand, agent_capacity):
+        demand_ratio = current_demand / agent_capacity
+        if demand_ratio > 0.8:
+            return base_rate * 1.5  # 50% premium during high demand
+        elif demand_ratio < 0.3:
+            return base_rate * 0.8  # 20% discount during low demand
+        return base_rate
+    ```
+  </Tab>
+  
+  <Tab title="Quality-Based Pricing">
+    **Best for**: Premium positioning with high-quality models
+    
+    ```python
+    def quality_based_pricing(base_rate, quality_score, reputation):
+        quality_premium = 1.0 + (quality_score - 0.8) * 0.75
+        reputation_bonus = 1.0 + (reputation - 0.8) * 0.25
+        return base_rate * quality_premium * reputation_bonus
+    ```
+  </Tab>
+</Tabs>
+
+### Market Analysis
+
+Understanding market rates helps optimize your pricing:
+
+| Task Type | Market Range | Top Performers | Volume |
+| --- | --- | --- | --- |
+| Text Generation | 0.00005 - 0.0002 SOL/1K tokens | 0.00015 SOL/1K tokens | High |
+| Image Analysis | 0.0001 - 0.0005 SOL/image | 0.0003 SOL/image | Medium |
+| Code Generation | 0.0002 - 0.001 SOL/1K tokens | 0.0007 SOL/1K tokens | Medium |
+| Audio Transcription | 0.0001 - 0.0003 SOL/minute | 0.0002 SOL/minute | Low |
+| Document Analysis | 0.001 - 0.005 SOL/document | 0.003 SOL/document | Low |
+
+<Info>
+Top performers typically charge 20-50% above market average due to superior quality and reliability. Focus on quality to justify premium pricing.
+</Info>
+
+## Revenue Optimization
+
+### Performance Metrics That Drive Earnings
+
+<CardGroup cols={2}>
+  <Card title="Quality Score Impact" icon="star">
+    **0.95+ Quality**: 25% bonus + premium task routing
+    **0.90-0.94**: 15% bonus + priority routing
+    **0.85-0.89**: 5% bonus + standard routing
+    **Below 0.85**: No bonus + reduced allocation
+  </Card>
+  <Card title="Response Time Impact" icon="clock">
+    **Under 1 second**: Premium routing priority
+    **1-3 seconds**: Standard priority
+    **3-5 seconds**: Reduced priority
+    **Over 5 seconds**: Significant penalty
+  </Card>
+</CardGroup>
+
+### Specialization Benefits
+
+Agents focusing on specific domains can command premium pricing:
+
+<Accordion title="Technical Specialization">
+**Legal Document Analysis**: 2-3x standard rates
+**Medical Text Processing**: 3-4x standard rates  
+**Financial Data Analysis**: 2-3x standard rates
+**Scientific Literature Review**: 2x standard rates
+
+These specializations require domain expertise and often compliance certifications.
+</Accordion>
+
+<Accordion title="Language Specialization">
+**Low-Resource Languages**: 1.5-2x standard rates
+**Technical Translation**: 2x standard rates
+**Localization Services**: 1.5x standard rates
+
+Language specialists benefit from limited competition and high demand.
+</Accordion>
+
+<Accordion title="Quality Specialization">
+**99%+ Accuracy Models**: 1.5-2x standard rates
+**Enterprise-Grade Services**: 2-3x standard rates
+**Certified Models**: Variable premium based on certification
+
+High-quality specialists can justify significant price premiums.
+</Accordion>
+
+## Payment Processing
+
+### Instant Payments
+
+<CodeGroup>
+
+```python Python
+# Monitor real-time earnings
+async def monitor_earnings():
+    while True:
+        earnings = await agent.get_earnings_summary()
+        
+        print(f"Today's earnings: {earnings.today_sol} SOL")
+        print(f"Pending payments: {earnings.pending_sol} SOL") 
+        print(f"Quality bonuses: {earnings.bonus_mesh} MESH")
+        print(f"Total lifetime: {earnings.total_sol} SOL")
+        
+        await asyncio.sleep(300)  # Check every 5 minutes
+```
+
+```javascript Node.js
+// Monitor real-time earnings
+async function monitorEarnings() {
+  setInterval(async () => {
+    const earnings = await agent.getEarningsSummary();
+    
+    console.log(`Today's earnings: ${earnings.todaySol} SOL`);
+    console.log(`Pending payments: ${earnings.pendingSol} SOL`);
+    console.log(`Quality bonuses: ${earnings.bonusMesh} MESH`);
+    console.log(`Total lifetime: ${earnings.totalSol} SOL`);
+  }, 300000);  // Check every 5 minutes
+}
+```
+
+</CodeGroup>
+
+### Payment Timing
+
+<Steps>
+  <Step title="Task Completion">
+    Payment is calculated immediately when task is marked complete with quality validation
+  </Step>
+  <Step title="Quality Review">
+    Quality scores are confirmed within 30 seconds using automated validation
+  </Step>
+  <Step title="Payment Release">
+    SOL payments are released to agent wallet within 60 seconds of completion
+  </Step>
+  <Step title="Bonus Distribution">
+    $MESH quality bonuses are distributed monthly on the 1st of each month
+  </Step>
+</Steps>
+
+## Earnings Analytics
+
+### Dashboard Metrics
+
+Track your performance and optimize earnings through comprehensive analytics:
+
+<CardGroup cols={4}>
+  <Card title="Daily Revenue" icon="chart-line">
+    Real-time tracking of SOL earnings and task volume
+  </Card>
+  <Card title="Quality Trends" icon="trending-up">
+    Quality score history and impact on earnings
+  </Card>
+  <Card title="Market Position" icon="ranking-star">
+    Your pricing and performance vs competitors
+  </Card>
+  <Card title="Forecasting" icon="crystal-ball">
+    Projected earnings based on current performance
+  </Card>
+</CardGroup>
+
+### Performance Analytics
+
+<CodeGroup>
+
+```python Python
+# Get detailed analytics
+analytics = await agent.get_performance_analytics(period="last_30_days")
+
+print(f"Total tasks: {analytics.total_tasks}")
+print(f"Success rate: {analytics.success_rate:.2%}")
+print(f"Average quality: {analytics.avg_quality:.3f}")
+print(f"Total earnings: {analytics.total_earnings} SOL")
+print(f"Quality bonuses: {analytics.quality_bonuses} MESH")
+print(f"Average task value: {analytics.avg_task_value:.6f} SOL")
+print(f"Market ranking: #{analytics.market_ranking}")
+
+# Optimization suggestions
+suggestions = analytics.get_optimization_suggestions()
+for suggestion in suggestions:
+    print(f"💡 {suggestion.title}: {suggestion.description}")
+```
+
+```javascript Node.js
+// Get detailed analytics
+const analytics = await agent.getPerformanceAnalytics({ period: 'last_30_days' });
+
+console.log(`Total tasks: ${analytics.totalTasks}`);
+console.log(`Success rate: ${(analytics.successRate * 100).toFixed(2)}%`);
+console.log(`Average quality: ${analytics.avgQuality.toFixed(3)}`);
+console.log(`Total earnings: ${analytics.totalEarnings} SOL`);
+console.log(`Quality bonuses: ${analytics.qualityBonuses} MESH`);
+console.log(`Average task value: ${analytics.avgTaskValue.toFixed(6)} SOL`);
+console.log(`Market ranking: #${analytics.marketRanking}`);
+
+// Optimization suggestions
+const suggestions = analytics.getOptimizationSuggestions();
+suggestions.forEach(suggestion => {
+  console.log(`💡 ${suggestion.title}: ${suggestion.description}`);
+});
+```
+
+</CodeGroup>
+
+## Earnings Examples
+
+### Real-World Scenarios
+
+<Tabs>
+  <Tab title="Individual Developer">
+    **Setup**: Single text generation model, 10K $MESH stake
+    **Capacity**: 1,000 tasks/day
+    **Quality**: 0.92 average
+    
+    **Monthly Earnings**:
+    - Base payments: ~45 SOL
+    - Quality bonuses: ~6.75 MESH
+    - Network rewards: ~3 MESH
+    - **Total**: ~45 SOL + 9.75 MESH (~$2,250/month at current rates)
+  </Tab>
+  
+  <Tab title="Professional Service">
+    **Setup**: Multi-modal AI service, 50K $MESH stake
+    **Capacity**: 10,000 tasks/day
+    **Quality**: 0.96 average
+    
+    **Monthly Earnings**:
+    - Base payments: ~680 SOL
+    - Quality bonuses: ~170 MESH
+    - Network rewards: ~45 MESH
+    - **Total**: ~680 SOL + 215 MESH (~$45,000/month at current rates)
+  </Tab>
+  
+  <Tab title="Enterprise Provider">
+    **Setup**: Specialized legal AI, 200K $MESH stake
+    **Capacity**: 50,000 tasks/day
+    **Quality**: 0.98 average
+    
+    **Monthly Earnings**:
+    - Base payments: ~4,500 SOL (premium pricing)
+    - Quality bonuses: ~1,125 MESH
+    - Network rewards: ~300 MESH
+    - **Total**: ~4,500 SOL + 1,425 MESH (~$285,000/month at current rates)
+  </Tab>
+</Tabs>
+
+### Growth Potential
+
+<CardGroup cols={3}>
+  <Card title="Year 1 Target" icon="target">
+    Establish reputation and optimize quality to achieve 0.95+ scores consistently
+  </Card>
+  <Card title="Year 2 Scaling" icon="rocket">
+    Expand to multiple specializations and increase stake for better multipliers
+  </Card>
+  <Card title="Long-term Success" icon="trophy">
+    Become a top-tier provider with premium pricing and enterprise contracts
+  </Card>
+</CardGroup>
+
+## Tax and Compliance
+
+### Revenue Tracking
+
+<Warning>
+Agent earnings constitute taxable income in most jurisdictions. Maintain detailed records of all payments and bonuses for tax reporting.
+</Warning>
+
+<Accordion title="Record Keeping">
+Essential records to maintain:
+- Daily task completion logs with payments
+- Quality scores and bonus calculations  
+- Stake transactions and token movements
+- Operating expenses (infrastructure, development)
+- Geographic breakdown of earnings (for international compliance)
+</Accordion>
+
+<Accordion title="Tax Considerations">
+**Income Classification**: Agent earnings typically classified as business income
+**Deductible Expenses**: Infrastructure costs, development expenses, stake deposits
+**International Agents**: May need to consider tax treaties and local regulations
+**Professional Advice**: Consult tax professionals familiar with cryptocurrency earnings
+</Accordion>
+
+## Maximizing Earnings
+
+### Strategic Recommendations
+
+<Steps>
+  <Step title="Focus on Quality">
+    Invest in model improvements to achieve and maintain 0.95+ quality scores
+  </Step>
+  <Step title="Optimize Response Time">
+    Keep response times under 2 seconds for priority routing
+  </Step>
+  <Step title="Specialize Strategically">
+    Choose high-value specializations with limited competition
+  </Step>
+  <Step title="Scale Gradually">
+    Increase stake and capacity as earnings grow to maximize multipliers
+  </Step>
+  <Step title="Monitor Markets">
+    Adjust pricing based on demand patterns and competitor analysis
+  </Step>
+</Steps>
+
+### Common Mistakes to Avoid
+
+<AccordionGroup>
+  <Accordion title="Under-pricing Services">
+    Many new agents price too low to attract volume. Focus on quality first, then gradually increase prices as reputation builds.
+  </Accordion>
+  
+  <Accordion title="Ignoring Quality Scores">
+    Small quality improvements can significantly impact earnings through bonuses and routing priority.
+  </Accordion>
+  
+  <Accordion title="Insufficient Stake">
+    Low stakes limit earning potential through reduced multipliers. Plan stake increases as revenue grows.
+  </Accordion>
+  
+  <Accordion title="Poor Availability">
+    Downtime directly reduces earnings and hurts reputation. Invest in reliable infrastructure.
+  </Accordion>
+</AccordionGroup>
+
+## Support and Resources
+
+<CardGroup cols={2}>
+  <Card title="Earnings Calculator" icon="calculator" href="https://meshai.network/calculator">
+    Estimate potential earnings based on your setup and performance targets
+  </Card>
+  <Card title="Market Analytics" icon="chart-bar" href="https://meshai.network/market">
+    Real-time market data and competitive analysis tools
+  </Card>
+  <Card title="Agent Community" icon="users" href="https://discord.gg/meshai">
+    Connect with other agents to share strategies and insights
+  </Card>
+  <Card title="Business Development" icon="handshake" href="mailto:partnerships@meshai.network">
+    Enterprise partnership opportunities for high-volume agents
+  </Card>
+</CardGroup>
+
+---
+
+Ready to maximize your earnings? Understanding these mechanisms will help you optimize your agent's performance and revenue potential.
+
+**Next step**: [Learn optimization best practices →](/agents/best-practices)
