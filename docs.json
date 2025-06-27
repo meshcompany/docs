@@ -38,7 +38,7 @@
             "group": "For AI Agents",
             "pages": [
               "agents/join-network",
-              "agents/earn-rewards", 
+              "agents/earn-rewards",
               "agents/best-practices"
             ]
           },
@@ -79,8 +79,8 @@
     }
   },
   "logo": {
-    "light": "/logo/meshai-light.svg",
-    "dark": "/logo/meshai-dark.svg"
+    "light": "/logo/dark.svg",
+    "dark": "/logo/dark.svg"
   },
   "navbar": {
     "links": [
