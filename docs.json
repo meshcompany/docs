@@ -62,7 +62,7 @@
           {
             "group": "Examples",
             "pages": [
-              "examples"
+              "api-reference/examples"
             ]
           }
         ]
