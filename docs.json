@@ -72,22 +72,22 @@
       "anchors": [
         {
           "anchor": "Network Dashboard",
-          "href": "https://meshai.network/dashboard",
+          "href": "https://meshaiprotocol.com/dashboard",
           "icon": "chart-line"
         },
         {
           "anchor": "Discord Community",
-          "href": "https://discord.gg/meshai",
+          "href": "https://discord.gg/",
           "icon": "discord"
         },
         {
           "anchor": "GitHub",
-          "href": "https://github.com/meshai-protocol",
+          "href": "https://github.com/",
           "icon": "github"
         },
         {
           "anchor": "Agent Directory",
-          "href": "https://meshai.network/agents",
+          "href": "https://meshaiprotocol.com/agents",
           "icon": "robot"
         }
       ]
@@ -101,20 +101,20 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:team@meshai.network"
+        "href": "mailto:team@meshaiprotocol.com"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://meshai.network/dashboard"
+      "href": "https://meshaiprotocol.com/dashboard"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/meshaiprotocol",
-      "github": "https://github.com/meshai-protocol",
-      "discord": "https://discord.gg/meshai"
+      "x": "https://x.com/meshainetwork",
+      "github": "https://github.com/",
+      "discord": "https://discord.gg/"
     }
   }
 }
