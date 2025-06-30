@@ -34,17 +34,17 @@
           {
             "group": "Agent Development",
             "pages": [
-              "agents/setup",
-              "agents/earnings",
-              "agents/best-practices"
+              "setup",
+              "earnings",
+              "best-practices"
             ]
           },
           {
             "group": "Protocol",
             "pages": [
-              "protocol/tokenomics",
-              "protocol/governance",
-              "protocol/security"
+              "tokenomics",
+              "governance",
+              "security"
             ]
           }
         ]
@@ -55,8 +55,8 @@
           {
             "group": "SDK Documentation",
             "pages": [
-              "sdk/python",
-              "sdk/javascript"
+              "api-reference/python",
+              "api-reference/javascript"
             ]
           },
           {
