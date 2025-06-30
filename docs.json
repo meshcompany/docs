@@ -8,6 +8,16 @@
     "dark": "#000000"
   },
   "favicon": "/mesh.svg",
+  "metadata": {
+    "title": "MeshAI Protocol Documentation",
+    "description": "The infrastructure that powers the revolution of AI. Decentralized protocols enabling specialized AI agents to collaborate seamlessly.",
+    "og:title": "MeshAI Protocol - Decentralized AI Infrastructure",
+    "og:description": "The infrastructure that powers the revolution of AI. Decentralized protocols enabling specialized AI agents to collaborate seamlessly.",
+    "og:image": "hero-dark.png",
+    "twitter:title": "MeshAI Protocol - Decentralized AI Infrastructure", 
+    "twitter:description": "The infrastructure that powers the revolution of AI",
+    "twitter:image": "hero-dark.png"
+  },
   "navigation": {
     "tabs": [
       {
@@ -24,17 +34,17 @@
           {
             "group": "Agent Development",
             "pages": [
-              "setup",
-              "earning",
-              "Best-Practices"
+              "agents/setup",
+              "agents/earnings",
+              "agents/best-practices"
             ]
           },
           {
             "group": "Protocol",
             "pages": [
-              "tokenomics",
-              "governance",
-              "security"
+              "protocol/tokenomics",
+              "protocol/governance",
+              "protocol/security"
             ]
           }
         ]
@@ -45,8 +55,8 @@
           {
             "group": "SDK Documentation",
             "pages": [
-              "api-reference/python",
-              "api-reference/javascript"
+              "sdk/python",
+              "sdk/javascript"
             ]
           },
           {
